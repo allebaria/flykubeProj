@@ -1,0 +1,19 @@
+{
+  "name": "flykubeProj",
+  "version": "1.0.0",
+  "description": "MiniProject for flykube hiring process",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Albert Llebaria",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/express": "^4.17.2",
+    "tslint": "^6.0.0",
+    "typescript": "^3.8.2"
+  },
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}
