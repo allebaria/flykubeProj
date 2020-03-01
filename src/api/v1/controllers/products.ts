@@ -17,10 +17,15 @@ export default class ProductsController {
     }
 
     public getProduct = async (req: Request, res: Response) => {
+        const errors = validationResult(req)
+        if (!errors.isEmpty()) {
+            return res.status(422).json({ errors: errors.mapped() });
+        }
+        
         const product_id : number = parseInt(req.params.id)
         try {
             const product : Product = await Product.findByPk(product_id)
-            product ? res.status(200).json(product) : res.status(404).json({ error: 'Product not found' })
+            return product ? res.status(200).json(product) : res.status(404).json({ error: 'Product not found' })
         } catch (e) {
             console.error(e)
         }
@@ -44,10 +49,33 @@ export default class ProductsController {
                 price,
                 description
             })
-            res.status(200).json(new_product)
+            return res.status(200).json(new_product)
             
         } catch (e) {
-            res.status(409).json({ error: 'Could not create product' })
+            return res.status(409).json({ error: 'Could not create product' })
+        }
+    }
+
+    public deleteProduct = async (req: Request, res: Response) => {
+        //Check it there are validation errors
+        const errors = validationResult(req)
+        if (!errors.isEmpty()) {
+            return res.status(422).json({ errors: errors.mapped() });
+        }
+
+        const product_id : number = parseInt(req.params.id)
+
+        try {
+            const product_to_delete = await Product.findByPk(product_id)
+            if (!product_to_delete) return res.status(404).json({ error: 'Product to be deleted was not found'})
+            await Product.destroy({
+                where: {
+                    id: product_id
+                }
+            })
+            return res.status(200).json({ msg: 'Product deleted sucessfully'})
+        } catch (e) {
+            return res.status(500).json({ error: 'Server internal error' })
         }
     }
 }
