@@ -70,55 +70,68 @@ describe('USERS API', () => {
     })
     
     describe('GET /api/V1/users/:id', () => {
-        context('when user does not exist', () => {
-            var findUser;
-            before(() => {
-                findUser =  sinon.stub(User, 'findByPk');
-                findUser.withArgs(1).returns(new Promise((resolve, reject) => {
-                    resolve(null);
-                  }));
-            })
-            
-            after(() => {
-                findUser.restore()
-            })
-    
-            it('returns status 404', done => {
+        context('when id param is not valid', () => {
+            it('returns status code 422', done => {
                 chai.request(app)
-                    .get('/api/v1/users/1')
+                    .get('/api/v1/users/abc')
                     .end((err, res) => {
-                        res.should.have.status(404)
+                        res.should.have.status(422)
                         done()
                     })
             })
         })
-    
-        context('when user exists', () => {
-            var findUser;
-            var foundUser = new User({
-                id: 1,
-                name: Faker.name.firstName(), 
-                email: Faker.internet.email(),
-                gender: 'male',
-                age: Faker.random.number()
+
+        context('when id param is valid', () => {
+            context('when user does not exist', () => {
+                var findUser;
+                before(() => {
+                    findUser =  sinon.stub(User, 'findByPk');
+                    findUser.withArgs(1).returns(new Promise((resolve, reject) => {
+                        resolve(null);
+                      }));
+                })
+                
+                after(() => {
+                    findUser.restore()
+                })
+        
+                it('returns status 404', done => {
+                    chai.request(app)
+                        .get('/api/v1/users/1')
+                        .end((err, res) => {
+                            res.should.have.status(404)
+                            done()
+                        })
+                })
             })
-            before(() => {
-                findUser =  sinon.stub(User, 'findByPk');
-                findUser.withArgs(1).returns(new Promise((resolve, reject) => {
-                    resolve(foundUser);
-                  }));
-            })
-            
-            after(() => {
-                findUser.restore()
-            })
-            it('returns status 200 and return a user', done => {
-                chai.request(app)
-                .get('/api/v1/users/1')
-                .end((err, res) => {
-                    res.should.have.status(200)
-                    expect(res.body).not.to.be.empty
-                    done()
+        
+            context('when user exists', () => {
+                var findUser;
+                var foundUser = new User({
+                    id: 1,
+                    name: Faker.name.firstName(), 
+                    email: Faker.internet.email(),
+                    gender: 'male',
+                    age: Faker.random.number()
+                })
+                before(() => {
+                    findUser =  sinon.stub(User, 'findByPk');
+                    findUser.withArgs(1).returns(new Promise((resolve, reject) => {
+                        resolve(foundUser);
+                      }));
+                })
+                
+                after(() => {
+                    findUser.restore()
+                })
+                it('returns status 200 and return a user', done => {
+                    chai.request(app)
+                    .get('/api/v1/users/1')
+                    .end((err, res) => {
+                        res.should.have.status(200)
+                        expect(res.body).not.to.be.empty
+                        done()
+                    })
                 })
             })
         })
@@ -228,6 +241,79 @@ describe('USERS API', () => {
                         res.should.have.status(409)
                         done()
                     })
+                })
+            })
+        })
+    })
+
+    describe('DELETE api/v1/users/:id', () => {
+        context('when id param is not valid', () => {
+            it('returns status code 422', done => {
+                chai.request(app)
+                    .delete('/api/v1/users/abc')
+                    .end((err, res) => {
+                        res.should.have.status(422)
+                        done()
+                    })
+            })
+        })
+
+        context('when id param is valid', () => {
+            var findUser;
+            var deleteUser;
+
+            context('when user exists', () => {
+                var foundUser = new User({
+                    id: 1,
+                    name: Faker.name.firstName(), 
+                    email: Faker.internet.email(),
+                    gender: 'male',
+                    age: Faker.random.number()
+                })
+                before(() => {
+                    findUser =  sinon.stub(User, 'findByPk');
+                    findUser.withArgs(1).returns(new Promise((resolve, reject) => {
+                        resolve(foundUser);
+                      }));
+                    
+                    deleteUser = sinon.stub(User, 'destroy');
+                })
+                
+                after(() => {
+                    findUser.restore()
+                    deleteUser.restore()
+                })
+
+                it('returns status code 200', done => {
+                    chai.request(app)
+                        .delete('/api/v1/users/1')
+                        .end((err, res) => {
+                            res.should.have.status(200)
+                            done()
+                        })
+                })
+            })
+
+            context('when user does not exist', () => {
+                before(() => {
+                    findUser =  sinon.stub(User, 'findByPk');
+                    findUser.withArgs(1).returns(new Promise((resolve, reject) => {
+                        resolve(null);
+                    }));
+
+                })
+                
+                after(() => {
+                    findUser.restore()
+                })
+
+                it('returns status code 404', done => {
+                    chai.request(app)
+                        .delete('/api/v1/users/1')
+                        .end((err, res) => {
+                            res.should.have.status(404)
+                            done()
+                        })
                 })
             })
         })

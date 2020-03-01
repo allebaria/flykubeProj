@@ -8,7 +8,7 @@ import Faker from 'faker';
 
 const expect = chai.expect;
 const should = chai.should();
-chai.use(chaiHttp)
+chai.use(chaiHttp);
 
 describe('PRODUCTS API', () => {
     describe('GET /api/v1/products', () => {
@@ -70,53 +70,66 @@ describe('PRODUCTS API', () => {
     
     describe('GET /api/V1/products/:id', () => {
         var findProduct;
-        context('when product does not exist', () => {
-            before(() => {
-                findProduct =  sinon.stub(Product, 'findByPk');
-                findProduct.withArgs(1).returns(new Promise((resolve, reject) => {
-                    resolve(null);
-                  }));
-            })
-            
-            after(() => {
-                findProduct.restore()
-            })
-    
-            it('returns status 404', done => {
+        context('when id param is not valid', () => {
+            it('returns status code 422', done => {
                 chai.request(app)
-                    .get('/api/v1/products/1')
+                    .get('/api/v1/products/abc')
                     .end((err, res) => {
-                        res.should.have.status(404)
+                        res.should.have.status(422)
                         done()
                     })
             })
         })
-    
-        context('when product exists', () => {
-            var foundProduct = new Product({
-                id: 1,
-                name: Faker.commerce.productName(), 
-                category: Faker.random.alphaNumeric(),
-                price: Faker.commerce.price(),
-                description: Faker.lorem.text()
+
+        context('when id param is valid', () => {
+            context('when product does not exist', () => {
+                before(() => {
+                    findProduct =  sinon.stub(Product, 'findByPk');
+                    findProduct.withArgs(1).returns(new Promise((resolve, reject) => {
+                        resolve(null);
+                      }));
+                })
+                
+                after(() => {
+                    findProduct.restore()
+                })
+        
+                it('returns status 404', done => {
+                    chai.request(app)
+                        .get('/api/v1/products/1')
+                        .end((err, res) => {
+                            res.should.have.status(404)
+                            done()
+                        })
+                })
             })
-            before(() => {
-                findProduct =  sinon.stub(Product, 'findByPk');
-                findProduct.withArgs(1).returns(new Promise((resolve, reject) => {
-                    resolve(foundProduct);
-                  }));
-            })
-            
-            after(() => {
-                findProduct.restore()
-            })
-            it('returns status 200 and return a product', done => {
-                chai.request(app)
-                .get('/api/v1/products/1')
-                .end((err, res) => {
-                    res.should.have.status(200)
-                    expect(res.body).not.to.be.empty
-                    done()
+        
+            context('when product exists', () => {
+                var foundProduct = new Product({
+                    id: 1,
+                    name: Faker.commerce.productName(), 
+                    category: Faker.random.alphaNumeric(),
+                    price: Faker.commerce.price(),
+                    description: Faker.lorem.text()
+                })
+                before(() => {
+                    findProduct =  sinon.stub(Product, 'findByPk');
+                    findProduct.withArgs(1).returns(new Promise((resolve, reject) => {
+                        resolve(foundProduct);
+                      }));
+                })
+                
+                after(() => {
+                    findProduct.restore()
+                })
+                it('returns status 200 and return a product', done => {
+                    chai.request(app)
+                    .get('/api/v1/products/1')
+                    .end((err, res) => {
+                        res.should.have.status(200)
+                        expect(res.body).not.to.be.empty
+                        done()
+                    })
                 })
             })
         })
@@ -198,6 +211,80 @@ describe('PRODUCTS API', () => {
                         res.should.have.status(409)
                         done()
                     })
+                })
+            })
+        })
+    })
+
+    describe('DELETE api/v1/products/:id', () => {
+        context('when id param is not valid', () => {
+            it('returns status code 422', done => {
+                chai.request(app)
+                    .delete('/api/v1/products/abc')
+                    .end((err, res) => {
+                        res.should.have.status(422)
+                        done()
+                    })
+            })
+        })
+
+        context('when id param is valid', () => {
+            var findProduct;
+            var deleteProduct;
+
+            context('when product exists', () => {
+                var foundProduct = new Product({
+                    id: 1,
+                    name: Faker.commerce.productName(), 
+                    category: Faker.random.alphaNumeric(),
+                    price: Faker.commerce.price(),
+                    description: Faker.lorem.text()
+                })
+                before(() => {
+                    findProduct =  sinon.stub(Product, 'findByPk');
+                    findProduct.withArgs(1).returns(new Promise((resolve, reject) => {
+                        resolve(foundProduct);
+                      }));
+                    
+                    deleteProduct = sinon.stub(Product, 'destroy');
+
+                })
+                
+                after(() => {
+                    findProduct.restore()
+                    deleteProduct.restore()
+                })
+
+                it('returns status code 200', done => {
+                    chai.request(app)
+                        .delete('/api/v1/products/1')
+                        .end((err, res) => {
+                            res.should.have.status(200)
+                            done()
+                        })
+                })
+            })
+
+            context('when product does not exist', () => {
+                before(() => {
+                    findProduct =  sinon.stub(Product, 'findByPk');
+                    findProduct.withArgs(1).returns(new Promise((resolve, reject) => {
+                        resolve(null);
+                    }));
+
+                })
+                
+                after(() => {
+                    findProduct.restore()
+                })
+
+                it('returns status code 404', done => {
+                    chai.request(app)
+                        .delete('/api/v1/products/1')
+                        .end((err, res) => {
+                            res.should.have.status(404)
+                            done()
+                        })
                 })
             })
         })
