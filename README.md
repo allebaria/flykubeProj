@@ -21,7 +21,7 @@ The endpoints that have been created are the following:
   * `post localhost:8080/api/v1/users`--> Create a new user
   
      |   Parameter   | Required |  Type  |  Description  |
-     | ------------- | -------- |               |
+     | ------------- | ------------- | ------------- | ------------- |
      | name | Yes |  String  |  User's name  |  
      | email | Yes |  String  |  User's email (must be unique)  |  
      | gender | Yes |  String  |  User's gender. Must be 'female' or 'male'  |  
@@ -38,7 +38,7 @@ The endpoints that have been created are the following:
   * `post localhost:8080/api/v1/products`--> Create a new product
   
      |   Parameter   | Required |  Type  |  Description  |
-     | ------------- | -------- |               |
+     | ------------- | ------------- | ------------- | ------------- |
      | name | Yes |  String  |  Product's name  |  
      | category | Yes |  String  |  Product's category  |  
      | price | Yes |  Float  |  Product's price  |  
@@ -55,7 +55,7 @@ The endpoints that have been created are the following:
   * `post localhost:8080/api/v1/invoices`--> Create a new invoice
   
      |   Parameter   | Required |  Type  |  Description  |
-     | ------------- | -------- |               |
+     | ------------- | ------------- | ------------- | ------------- |
      | user_id | Yes |  String  |  Id corresponding to the user that has carried out the purchase  |  
      | product_id | Yes |  String  |  Id corresponding to the product that has been purchased  |  
      
