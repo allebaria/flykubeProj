@@ -113,7 +113,7 @@ This software is created using an MVC design pattern. Besides, it has been imple
 └── ...                             # Node modules, gitignore, nodemon.js etc.
 ```
 
-Furthermore, the API is prepared to be written in type script for better readability and scalability. 
+Furthermore, the API is prepared to be written in Typescript for better readability and scalability. 
 
 ## Dependencies and technologies used
 
