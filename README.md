@@ -12,6 +12,10 @@ Initialization command lines:
 
 The endpoints that have been created are the following:
 
+  ### Health
+  
+  * `get localhost:8080/api/health`--> Check if server is 'UP'.
+
   ### Users
 
   * `get localhost:8080/api/v1/users`--> Retreive all users
