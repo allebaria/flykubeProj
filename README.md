@@ -51,9 +51,7 @@ The endpoints that have been created are the following:
   * `delete localhost:8080/api/v1/products/:id`--> Delete product with a specified id
   
   ### Invoices
-  
-  * `get localhost:8080/api/v1/invoices`--> Retreive all invoices
-  
+    
   * `get localhost:8080/api/v1/invoices/:id`--> Retreive invoice with a specified id
   
   * `post localhost:8080/api/v1/invoices`--> Create a new invoice
