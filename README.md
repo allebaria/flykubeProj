@@ -96,13 +96,13 @@ This software is created using an MVC design pattern. Besides, it has been imple
 ├── src
 │    ├── api                        # Main api files (routes, controllers, models, versions...)                       
 │        ├── routes                 # Main api routes
-│             ├── index.js          # Gathers versions' base routes and defines health endpoint                    
+│             ├── index.ts          # Gathers versions' base routes and defines health endpoint                    
 │        ├── services               # Service files (third party APIs, microservices etc.)
 │        ├── v1                     # Version one folder
 │            ├── controllers        # Version one controllers
 │            ├── models             # Version one models
 │            ├── routes             # Version one routes
-│                 ├── index.js      # Defines the routes for version one and assignes each one to a controller function
+│                 ├── index.ts      # Defines the routes for version one and assignes each one to a controller function
 │        ├── health.ts              # API health 'controller'
 │        └── ...                    # Other version folders and/or further considerations
 │     ├── config                    # Configuration files
