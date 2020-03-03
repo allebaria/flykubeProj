@@ -83,6 +83,8 @@ DB_DIALECT_PROD = postgres
 ```
 Production env variables are not mandatory. Instead, it is recommended to only fill dev variables when checking the API behavior. A postgres database with the models corresponding schema must be created and fill the environment variables according to it (host, user, password and name).
 
+To avoid creating new tables, primarey keys and foreign keys, you can import the example schema provided inside the utils folder into your postgres db. 
+
 ## Design Pattern
 
 This software is created using an MVC design pattern. Besides, it has been implemented with a versioning strategy in order to create a more scalable software. Therefore, each version will contain its own models and controllers. Folder structure is hence like to the one below: 
