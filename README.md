@@ -60,6 +60,8 @@ The endpoints that have been created are the following:
      | ------------- | ------------- | ------------- | ------------- |
      | user_id | Yes |  String  |  Id corresponding to the user that has carried out the purchase  |  
      | product_id | Yes |  String  |  Id corresponding to the product that has been purchased  |  
+     
+**You can find a postman collection json file containg all these endpoints inside the `utils` folder.**
        
 ## Requirements
 
@@ -83,7 +85,7 @@ DB_DIALECT_PROD = postgres
 ```
 Production env variables are not mandatory. Instead, it is recommended to only fill dev variables when checking the API behavior. A postgres database with the models corresponding schema must be created and fill the environment variables according to it (host, user, password and name).
 
-To avoid creating new tables, primarey keys and foreign keys, you can import the example schema provided inside the utils folder into your postgres db. 
+**To avoid creating new tables, primarey keys and foreign keys, you can import the example schema provided inside the `utils` folder into your postgres db.**
 
 ## Design Pattern
 
