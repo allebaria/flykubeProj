@@ -60,9 +60,7 @@ The endpoints that have been created are the following:
      | ------------- | ------------- | ------------- | ------------- |
      | user_id | Yes |  String  |  Id corresponding to the user that has carried out the purchase  |  
      | product_id | Yes |  String  |  Id corresponding to the product that has been purchased  |  
-     
-  * `delete localhost:8080/api/v1/invoices/:id`--> Delete invoice with a specified id
-  
+       
 ## Requirements
 
 It is required to provide some process environtment variables. They must be stablished in a file named config.env inside `/src/api/config`folder. It must contain the following variables:
