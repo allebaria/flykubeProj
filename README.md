@@ -12,6 +12,10 @@ Initialization command lines:
 
 The endpoints that have been created are the following:
 
+  ### Health
+  
+  * `get localhost:8080/api/health`--> Check if server is 'UP'.
+
   ### Users
 
   * `get localhost:8080/api/v1/users`--> Retreive all users
@@ -47,9 +51,7 @@ The endpoints that have been created are the following:
   * `delete localhost:8080/api/v1/products/:id`--> Delete product with a specified id
   
   ### Invoices
-  
-  * `get localhost:8080/api/v1/invoices`--> Retreive all invoices
-  
+    
   * `get localhost:8080/api/v1/invoices/:id`--> Retreive invoice with a specified id
   
   * `post localhost:8080/api/v1/invoices`--> Create a new invoice
@@ -58,9 +60,7 @@ The endpoints that have been created are the following:
      | ------------- | ------------- | ------------- | ------------- |
      | user_id | Yes |  String  |  Id corresponding to the user that has carried out the purchase  |  
      | product_id | Yes |  String  |  Id corresponding to the product that has been purchased  |  
-     
-  * `delete localhost:8080/api/v1/invoices/:id`--> Delete invoice with a specified id
-  
+       
 ## Requirements
 
 It is required to provide some process environtment variables. They must be stablished in a file named config.env inside `/src/api/config`folder. It must contain the following variables:
@@ -82,6 +82,8 @@ DB_NAME_PROD =
 DB_DIALECT_PROD = postgres
 ```
 Production env variables are not mandatory. Instead, it is recommended to only fill dev variables when checking the API behavior. A postgres database with the models corresponding schema must be created and fill the environment variables according to it (host, user, password and name).
+
+To avoid creating new tables, primarey keys and foreign keys, you can import the example schema provided inside the utils folder into your postgres db. 
 
 ## Design Pattern
 
